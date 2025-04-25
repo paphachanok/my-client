@@ -1,9 +1,9 @@
-module github.com/your-org/my-client
+module github.com/paphachanok/my-client
 
-go 1.21
+go 1.24.0
 
-require (
-    github.com/paphachanok/coder-gene-test v1.0.0
-)
+toolchain go1.24.2
 
-replace github.com/paphachanok/coder-gene-test => ../modelapi
+require github.com/paphachanok/modelgene v1.0.0
+
+require github.com/ollama/ollama v0.6.6 // indirect

@@ -1,38 +1,49 @@
-package main 
-import (
-	"encoding/json"
-	"fmt"
-	"log"
+package main
 
-	"github.com/paphachanok/coder-gene-test/api"
+import (
+	"context"
+	"fmt"
+	"net/http"
+	"time"
+
+	"github.com/paphachanok/modelgene/pkg/client"
+	"github.com/paphachanok/modelgene/pkg/types"
 )
 
 func main() {
-	// Create a unified request
-	req := modelapi.APIRequest{
-		Model: "gpt-4",
-		Messages: []modelapi.Message{
-			{Role: "system", Content: "You are a helpful assistant."},
-			{Role: "user", Content: "Tell me a joke."},
+	// Step 1: Prepare configuration
+	cfg := &types.Config{
+		OllamaConfig: &types.OllamaConfig{
+			BaseURL: "https://ollama.env.connectedtech.dev/api/chat",
+			HTTPClient: &http.Client{
+				Timeout: 60 * time.Second,
+			},
 		},
-		Temperature: modelapi.PtrFloat64(0.7),
-		MaxTokens:   modelapi.PtrInt(100),
-		Stream:      modelapi.PtrBool(false),
 	}
 
-	// Convert to OpenAI request
-	openaiPayload, err := api.ConvertToOpenAI(req)
+	// Step 2: Initialize modelgene client
+	c, err := client.NewClient(cfg)
 	if err != nil {
-		log.Fatalf("conversion failed: %v", err)
+		panic(fmt.Errorf("failed to initialize client: %w", err))
 	}
 
-	// Marshal to JSON to simulate API sending
-	jsonData, err := json.MarshalIndent(openaiPayload, "", "  ")
+	// Step 3: Create API request
+	req := types.APIRequest{
+		Model: "qwq:32b",
+		Messages: []types.Message{
+			{
+				Role:    "user",
+				Content: "Hello, can you tell me a joke?",
+			},
+		},
+	}
+
+	// Step 4: Call Chat
+	resp, err := c.Chat(context.Background(), types.ProviderOllama, req)
 	if err != nil {
-		log.Fatalf("json marshal failed: %v", err)
+		panic(fmt.Errorf("failed to chat: %w", err))
 	}
 
-	fmt.Println("🧠 OpenAI Payload:\n", string(jsonData))
-
-	// Next step: use an HTTP client to send `jsonData` to OpenAI's API endpoint.
+	// Step 5: Print result
+	fmt.Println("🤖 Assistant:", resp.Choices[0].Message.Content)
 }
