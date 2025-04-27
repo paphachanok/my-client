@@ -14,7 +14,7 @@ func main() {
 	// Step 1: Prepare configuration
 	cfg := &types.Config{
 		OllamaConfig: &types.OllamaConfig{
-			BaseURL: "https://ollama.env.connectedtech.dev/api/chat",
+			BaseURL: "https://ollama.env.connectedtech.dev",
 			HTTPClient: &http.Client{
 				Timeout: 60 * time.Second,
 			},
