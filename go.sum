@@ -1,13 +1,15 @@
 github.com/anthropics/anthropic-sdk-go v0.2.0-beta.3 h1:b5t1ZJMvV/l99y4jbz7kRFdUp3BSDkI8EhSlHczivtw=
 github.com/anthropics/anthropic-sdk-go v0.2.0-beta.3/go.mod h1:AapDW22irxK2PSumZiQXYUFvsdQgkwIWlpESweWZI/c=
+github.com/connectedtechco/modelgene v1.1.5 h1:toPpD3MXRGNhq1b7lr0c24H7iQINh89dWS3dJw55Ebw=
+github.com/connectedtechco/modelgene v1.1.5/go.mod h1:o6nhjHYXi7sKEOta1L+gdpymOpAc5LOEdEod3JJfxhI=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
 github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/ollama/ollama v0.6.6 h1:rnCQTSTiRD3Dsvd35dh2j2YB9DlQMFQR/y3XOhWZOmI=
 github.com/ollama/ollama v0.6.6/go.mod h1:pGgtoNyc9DdM6oZI6yMfI6jTk2Eh4c36c2GpfQCH7PY=
-github.com/paphachanok/modelgene v1.1.4 h1:u91Ax7LZI555jC/K3t6NHW0WJr48C1+pKM49ksOedQ4=
-github.com/paphachanok/modelgene v1.1.4/go.mod h1:Aj6/1aVXxy4YvvZ4am9nveSR7AzN8xoO9KNB8s/EZuI=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=

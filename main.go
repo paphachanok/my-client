@@ -4,24 +4,28 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	anthropic_sdk "github.com/anthropics/anthropic-sdk-go"
-	"github.com/paphachanok/modelgene/pkg/client"
-	"github.com/paphachanok/modelgene/pkg/types"
+	"github.com/connectedtechco/modelgene/pkg/client"
+	"github.com/connectedtechco/modelgene/pkg/types"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	_ = godotenv.Load()
+
 	// Step 1: Prepare configuration
 	cfg := &types.Config{
 		OllamaConfig: &types.OllamaConfig{
-			BaseURL: "https://ollama.env.connectedtech.dev/",
+			BaseURL: os.Getenv("OLLAMA_BASE_URL"),
 			HTTPClient: &http.Client{
-				Timeout: 60 * time.Second,
+				Timeout: 3000 * time.Second,
 			},
 		},
 		AnthropicConfig: &types.AnthropicConfig{
-			APIKey: "your-anthropic-api-key",
+			APIKey: os.Getenv("ANTHROPIC_API_KEY"),
 		},
 	}
 
@@ -33,9 +37,9 @@ func main() {
 
 	// Step 3: Create APIRequest to Ollama
 	ollamaReq := types.APIRequest{
-		Model: "qwq:32b",
+		Model: "gemma3:12b",
 		Messages: []types.Message{
-			{Role: "user", Content: "Tell me a joke about computers"},
+			{Role: "user", Content: "What's color is banana"},
 		},
 	}
 
@@ -43,11 +47,17 @@ func main() {
 	anthropicReq := types.APIRequest{
 		Model: anthropic_sdk.ModelClaude3_7SonnetLatest,
 		Messages: []types.Message{
-			{Role: "user", Content: "Tell me a joke about computers"},
+			{Role: "user", Content: "What is collection in non-relational database"},
 		},
 	}
 
-	// Step 5: Call Chat for Ollama
+	// Step 5: Create embed request to Ollama
+	embedReq := types.APIRequest{
+		Model: "snowflake-arctic-embed2:568m",
+		Input: "The quick brown fox jumps over the lazy dog",
+	}
+
+	// Step 6: Call Chat for Ollama
 	ollamaResp, err := c.Chat(context.Background(), types.ProviderOllama, ollamaReq)
 	if err != nil {
 		fmt.Println("Ollama chat error:", err)
@@ -55,11 +65,25 @@ func main() {
 		fmt.Println("🤖 Ollama:", ollamaResp.Choices[0].Message.Content)
 	}
 
-	// Step 6: Call Chat for Anthropic
+	// Step 7: Call Chat for Anthropic
 	anthropicResp, err := c.Chat(context.Background(), types.ProviderAnthropic, anthropicReq)
 	if err != nil {
 		fmt.Println("Anthropic chat error:", err)
 	} else {
 		fmt.Println("🤖 Anthropic:", anthropicResp.Choices[0].Message.Content)
+	}
+
+	// Step 8: Call Embed function
+	embedResp, err := c.Embed(context.Background(), types.ProviderOllama, embedReq)
+	if err != nil {
+		fmt.Println("🔴 Ollama embed error:", err)
+		return
+	}
+
+	// Step 9: Print result (the embedding vector as a comma-separated string)
+	fmt.Println("🧠 Ollama embedding result:")
+	for _, choice := range embedResp.Choices {
+		fmt.Printf("🔹 Index %d:\n", choice.Index)
+		fmt.Printf("   Vector (stringified): %s\n", choice.Message.Content[:80]+"...") // truncated for display
 	}
 }
